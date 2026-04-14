@@ -13,7 +13,8 @@
       "mcp__claude_ai_Liivo__get-service-endpoints",
       "mcp__claude_ai_Liivo__describe-service-instance",
       "mcp__claude_ai_Liivo__get-instance-status",
-      "Bash(psql:*)"
+      "Bash(psql:*)",
+      "mcp__claude_ai_Liivo__list-my-apps"
     ]
   }
 }
