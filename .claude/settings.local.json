@@ -18,7 +18,8 @@
       "mcp__claude_ai_Liivo__setup-parameter-store",
       "mcp__claude_ai_Liivo__set-parameter",
       "mcp__claude_ai_Liivo__create-my-app",
-      "mcp__claude_ai_Liivo__get-my-app"
+      "mcp__claude_ai_Liivo__get-my-app",
+      "mcp__claude_ai_Liivo__get-my-app-logs"
     ]
   }
 }
