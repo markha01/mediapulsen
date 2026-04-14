@@ -4,7 +4,7 @@ import useAppStore from '../../store/appStore';
 const PAGE_TITLES = {
   '/':         { title: 'Dashboard',   sub: 'Overview of your content performance' },
   '/upload':   { title: 'Upload Data', sub: 'Import articles via CSV or manual entry' },
-  '/insights': { title: 'AI Insights', sub: 'Claude-powered analysis of your content' },
+  '/insights': { title: 'AI Insights', sub: 'Groq-powered analysis of your content' },
   '/compare':  { title: 'Compare',     sub: 'Compare two datasets side by side' },
 };
 

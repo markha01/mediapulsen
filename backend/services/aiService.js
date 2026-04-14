@@ -37,7 +37,8 @@ Rules:
 - Use specific numbers from the data
 - Focus on conversion rate, not raw views
 - Be direct and actionable for a non-technical publisher
-- metric.value should be a number, metric.unit a short string (e.g. "x", "%", "s", "articles")`;
+- metric.value should be a number, metric.unit a short string (e.g. "x", "%", "s", "articles")
+- Round ALL numbers to a maximum of 2 decimal places, both in text fields and in metric.value`;
 }
 
 function buildComparePrompt(summaryA, summaryB, nameA, nameB) {
@@ -77,7 +78,26 @@ Return ONLY valid JSON (no markdown, no explanation):
   }
 }
 
-Focus on what changed between periods and what the publisher should do differently.`;
+Focus on what changed between periods and what the publisher should do differently.
+Round ALL numbers to a maximum of 2 decimal places, both in text fields and in numeric JSON fields.`;
+}
+
+function roundNumericFields(parsed) {
+  if (parsed.insights) {
+    parsed.insights.forEach(i => {
+      if (i.metric && typeof i.metric.value === 'number') {
+        i.metric.value = Math.round(i.metric.value * 100) / 100;
+      }
+    });
+  }
+  if (parsed.delta) {
+    Object.keys(parsed.delta).forEach(k => {
+      if (typeof parsed.delta[k] === 'number') {
+        parsed.delta[k] = Math.round(parsed.delta[k] * 100) / 100;
+      }
+    });
+  }
+  return parsed;
 }
 
 async function generateInsights(summary) {
@@ -93,7 +113,7 @@ async function generateInsights(summary) {
 
   try {
     const cleaned = rawText.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
-    return { parsed: JSON.parse(cleaned), raw: rawText };
+    return { parsed: roundNumericFields(JSON.parse(cleaned)), raw: rawText };
   } catch (e) {
     console.error('Failed to parse Groq response:', rawText);
     throw new Error('AI response was not valid JSON');
@@ -113,7 +133,7 @@ async function generateComparison(summaryA, summaryB, nameA, nameB) {
 
   try {
     const cleaned = rawText.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
-    return { parsed: JSON.parse(cleaned), raw: rawText };
+    return { parsed: roundNumericFields(JSON.parse(cleaned)), raw: rawText };
   } catch (e) {
     console.error('Failed to parse Groq comparison response:', rawText);
     throw new Error('AI response was not valid JSON');
