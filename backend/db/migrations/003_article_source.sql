@@ -1,0 +1,1 @@
+ALTER TABLE articles ADD COLUMN source VARCHAR(10) DEFAULT 'csv' NOT NULL;
